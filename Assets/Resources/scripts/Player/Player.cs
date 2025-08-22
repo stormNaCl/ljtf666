@@ -1,6 +1,7 @@
+using Mirror;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     public PlayControl playControl;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
