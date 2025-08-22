@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.40f1
+CRC: 4104299798
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0db7753082bcbb2dc14bc8d0096c75cf
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f7a33e7b6018d04b00eedb6cb6a1ebfc
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: dd0b9f338112d6d9a37e12bc7b883eea
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: af7181f404f1447c0a7a17b3070b952b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.2D.SpriteShape.Runtime
+  ClassName: UnityEngine.U2D.AngleRange
+- AssemblyName: Unity.2D.SpriteShape.Runtime
+  ClassName: UnityEngine.U2D.CornerSprite
+Assets:
+- Assets/Resources/prefabs/idk.asset
+Dependencies: []

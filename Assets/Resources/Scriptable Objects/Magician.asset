@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b4081844caff7439692cb8d7a4e52a, type: 3}
+  m_Name: Magician
+  m_EditorClassIdentifier: 
+  self_name: magician
+  prefab: {fileID: 441458247417894313, guid: a1a5c97d2c606db49869107a797a9784, type: 3}
+  icon: {fileID: 21300000, guid: aed9cc613a6945c468a08efcfc6c4e18, type: 3}

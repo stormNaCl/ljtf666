@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.40f1
+CRC: 2317893683
+HashAppended: 0
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: prefabs/roadpre
+      Dependencies: {}
+    Info_1:
+      Name: prefabs/player
+      Dependencies: {}
+    Info_2:
+      Name: prefabs/playerroompre
+      Dependencies: {}
+    Info_3:
+      Name: so
+      Dependencies: {}
+    Info_4:
+      Name: ui
+      Dependencies: {}
