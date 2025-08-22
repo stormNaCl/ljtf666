@@ -6,6 +6,7 @@ using System.Collections;
 public class PlayerMovement : NetworkBehaviour
 {
     private PlayControl playControl;
+    private Player player;
     [SerializeField] private CharacterController characterController;
     [Header("移动属性")]
     [SerializeField] private Vector2 moveInput;
@@ -26,42 +27,28 @@ public class PlayerMovement : NetworkBehaviour
     [Header("动画属性")]
     [SerializeField] private Animator animator;
 
-    private void Awake()
+    
+    private void AssignInputSystem()
     {
         
-        
-        playControl = new PlayControl();
         playControl.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playControl.Player.Move.canceled += ctx => moveInput = Vector2.zero;
         playControl.Player.Look.performed += ctx => aimInput = ctx.ReadValue<Vector2>();
         playControl.Player.Look.canceled += ctx => aimInput = Vector2.zero;
         playControl.Player.Sprint.performed += ctx => HandleRun(true);
         playControl.Player.Sprint.canceled += ctx => HandleRun(false);
-        playControl.Player.Jump.performed += ctx => jumpTrigger = true ;
+        playControl.Player.Jump.performed += ctx => jumpTrigger = true;
         playControl.Player.Jump.canceled += ctx => jumpTrigger = false;
-        playControl.Player.Attack.performed += ctx => Shoot();
-        //playControl.Player.Attack.performed += ctx => Shoot();
+        
+        
     }
     private void HandleRun(bool res)
     {
         isRunning = res;
         animator.SetBool("isRunning", res);
     }
-    private void OnEnable()
-    {
-        
-        playControl.Enable();
-    }
-    private void OnDisable()
-    {
-        
-        playControl.Disable();
-    }
-    private void Shoot()
-    {
-        animator.SetTrigger("Fire");
-        Debug.Log("Shoot");
-    }
+    
+    
     private void AnimatorController()
     {
         Vector3 ss = Camera.main.transform.InverseTransformDirection(moveDirection);
@@ -106,6 +93,8 @@ public class PlayerMovement : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        player = GetComponent<Player>();
+        playControl = player.playControl;
         if (!isLocalPlayer)
             return;
         aim = GameObject.Find("aim").transform;
@@ -116,6 +105,7 @@ public class PlayerMovement : NetworkBehaviour
         //dirTransform.rotation = Camera.main.
         dirTransform.rotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);
         animator = GetComponentInChildren<Animator>();
+        AssignInputSystem();
     }
     private void HandleAim()
     {
