@@ -13,6 +13,14 @@ public class PlayerAnimationEvent : MonoBehaviour
         weaponController.WhenNeedOpRigWeight();
         //TODO fill
     }
+    public void OnGrabFinished()
+    {
+        weaponController.OnGrabFinished();
+    }
+    public void WhenCanShowWeaponModel()
+    {
+        weaponController.CanActivateWeaponModel();
+    }
     // Update is called once per frame
     void Update()
     {

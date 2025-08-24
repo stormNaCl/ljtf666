@@ -2633,12 +2633,14 @@ MonoBehaviour:
     weaponAnimator: {fileID: 0}
     switchSound: {fileID: 0}
     usingLayer: 1
+    grabType: 1
   - weaponName: m1911
     damage: 28
     weaponModel: {fileID: 3915664691868507018}
     weaponAnimator: {fileID: 0}
     switchSound: {fileID: 0}
     usingLayer: 2
+    grabType: 0
   tar: {fileID: 5920111603892817676}
   hint: {fileID: 2147426616096229115}
   OpRigStep: 2.5
@@ -3959,7 +3961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1694449805434718, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4952727429218122, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4033,7 +4035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: c7741850eebe1df4ea75a80275b16311, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: c7741850eebe1df4ea75a80275b16311, type: 3}
       propertyPath: m_LocalPosition.x

@@ -11,8 +11,10 @@ public struct Weapon
     public Animator weaponAnimator;
     public AudioClip switchSound;
     public int usingLayer;
+    public GrabType grabType;
     // 其他武器属性...
 }
+public enum GrabType { side, back };
 public class PlayerWeaponController : NetworkBehaviour
 {
     private Player player;
@@ -27,6 +29,8 @@ public class PlayerWeaponController : NetworkBehaviour
     private bool needOpRig2One;
     [SerializeField]
     private float OpRigStep = 2.5f;
+
+    
 
     void Update()
     {
@@ -43,6 +47,12 @@ public class PlayerWeaponController : NetworkBehaviour
         }
         OpRigWeight();
         // 添加更多武器按键...
+    }
+    public void PlayGrabAnimation(GrabType grabType)
+    {
+        animator.SetFloat("WeaponGrabType", (float)grabType);
+        animator.SetTrigger("grab");
+        animator.SetBool("BusyUseWeapon",true);
     }
     private void OpRigWeight()
     {
@@ -62,12 +72,14 @@ public class PlayerWeaponController : NetworkBehaviour
     [Command]
     void CmdRequestSwitchWeapon(int newWeaponIndex)
     {
+        Debug.Log("needqq");
         // 服务器端验证
         if (newWeaponIndex >= 0 && newWeaponIndex < weapons.Length)
         {
             currentWeaponIndex = newWeaponIndex;
             RpcOnWeaponSwitched(newWeaponIndex);
         }
+
     }
     void OnWeaponChanged(int oldIndex, int newIndex)
     {
@@ -78,11 +90,17 @@ public class PlayerWeaponController : NetworkBehaviour
         }
 
         // 启用当前武器模型
-        weapons[newIndex].weaponModel.SetActive(true);
+        //weapons[newIndex].weaponModel.SetActive(true);
+        SwitchUsingLayer();
+        PlayGrabAnimation(weapons[newIndex].grabType);
         AttechTargetTransform();
         // 本地处理音效、动画等
         //PlaySwitchEffects(newIndex);
     }
+    [ClientRpc]
+    public void CanActivateWeaponModel() => weapons[currentWeaponIndex].weaponModel.SetActive(true);
+    public void OnGrabFinished()=> animator.SetBool("BusyUseWeapon", false);
+
     [ClientRpc]
     void RpcOnWeaponSwitched(int newIndex)
     {
@@ -100,7 +118,6 @@ public class PlayerWeaponController : NetworkBehaviour
         hint.localPosition = weapons[currentWeaponIndex].weaponModel.GetComponentInChildren<LeftTransformChecker>().transform.localPosition;
         hint.localRotation = weapons[currentWeaponIndex].weaponModel.GetComponentInChildren<LeftTransformChecker>().transform.localRotation;
     }
-    
     public void SwitchUsingLayer()
     {
         for(int i = 1;i<animator.layerCount;i++)
@@ -130,8 +147,9 @@ public class PlayerWeaponController : NetworkBehaviour
         rig = GetComponentInChildren<Rig>();
         control.Player.Attack.performed += (ctx) => Shoot();
         control.Player.Reload.performed += (ctx) => Reload();
-        currentWeaponIndex = 1;
-        
+        CmdRequestSwitchWeapon(0);
+        currentWeaponIndex = 0;
+
     }
     public void Reload()
     {
