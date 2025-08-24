@@ -1,5 +1,7 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
+
 [System.Serializable]
 public struct Weapon
 {
@@ -8,6 +10,7 @@ public struct Weapon
     public GameObject weaponModel;
     public Animator weaponAnimator;
     public AudioClip switchSound;
+    public int usingLayer;
     // 其他武器属性...
 }
 public class PlayerWeaponController : NetworkBehaviour
@@ -17,6 +20,13 @@ public class PlayerWeaponController : NetworkBehaviour
     [SyncVar(hook = nameof(OnWeaponChanged))]
     public int currentWeaponIndex = 0;
     public Weapon[] weapons;
+    public Transform tar;
+    public Transform hint;
+    private Animator animator;
+    private Rig rig;
+    private bool needOpRig2One;
+    [SerializeField]
+    private float OpRigStep = 2.5f;
 
     void Update()
     {
@@ -31,8 +41,24 @@ public class PlayerWeaponController : NetworkBehaviour
         {
             CmdRequestSwitchWeapon(1);
         }
+        OpRigWeight();
         // 添加更多武器按键...
     }
+    private void OpRigWeight()
+    {
+        if(needOpRig2One)
+        {
+            rig.weight += OpRigStep * Time.deltaTime;
+        }
+        if(rig.weight >= 1)
+        {
+            needOpRig2One = false;
+            //rig.weight = 1;
+            return;
+        }
+    }
+    public void WhenNeedOpRigWeight()=>needOpRig2One = true; 
+    
     [Command]
     void CmdRequestSwitchWeapon(int newWeaponIndex)
     {
@@ -53,7 +79,7 @@ public class PlayerWeaponController : NetworkBehaviour
 
         // 启用当前武器模型
         weapons[newIndex].weaponModel.SetActive(true);
-
+        AttechTargetTransform();
         // 本地处理音效、动画等
         //PlaySwitchEffects(newIndex);
     }
@@ -65,6 +91,23 @@ public class PlayerWeaponController : NetworkBehaviour
         {
             OnWeaponChanged(currentWeaponIndex, newIndex);
         }
+    }
+    private void AttechTargetTransform()
+    {
+        //tar.SetParent(weapons[currentWeaponIndex].weaponModel.transform.parent);
+        tar.localPosition = weapons[currentWeaponIndex].weaponModel.GetComponentInChildren<LeftTransformChecker>().transform.localPosition;
+        tar.localRotation = weapons[currentWeaponIndex].weaponModel.GetComponentInChildren<LeftTransformChecker>().transform.localRotation;
+        hint.localPosition = weapons[currentWeaponIndex].weaponModel.GetComponentInChildren<LeftTransformChecker>().transform.localPosition;
+        hint.localRotation = weapons[currentWeaponIndex].weaponModel.GetComponentInChildren<LeftTransformChecker>().transform.localRotation;
+    }
+    
+    public void SwitchUsingLayer()
+    {
+        for(int i = 1;i<animator.layerCount;i++)
+        {
+            animator.SetLayerWeight(i, 0);
+        }
+        animator.SetLayerWeight(weapons[currentWeaponIndex].usingLayer, 1);
     }
    //void PlaySwitchEffects(int index)
    //{
@@ -82,9 +125,18 @@ public class PlayerWeaponController : NetworkBehaviour
     {
 
         player = GetComponent<Player>();
+        animator = GetComponentInChildren<Animator>();
         control = player.playControl;
+        rig = GetComponentInChildren<Rig>();
         control.Player.Attack.performed += (ctx) => Shoot();
+        control.Player.Reload.performed += (ctx) => Reload();
+        currentWeaponIndex = 1;
         
+    }
+    public void Reload()
+    {
+        animator.SetTrigger("reload");
+        rig.weight = 0;
     }
     public void Shoot()
     {

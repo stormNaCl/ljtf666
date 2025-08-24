@@ -69,6 +69,11 @@ public class ChooseRoleUI : NetworkBehaviour
             // TODO:提示人数不够
             return;
         }
+        if(!Gmt.CheckifReady(MyNetworkRoomManager.instance.roomSlots.Count))
+        {
+            Debug.Log("有人没选角色");
+            return;
+        }
         _roomManager.canStart = true;
         _roomManager.CheckReadyToBegin();
         

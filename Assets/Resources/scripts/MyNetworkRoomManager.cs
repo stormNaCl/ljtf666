@@ -67,6 +67,7 @@ public class MyNetworkRoomManager : NetworkRoomManager
         {
             gmt.frontids.Clear();
             gmt.backids.Clear();
+            Gmt.ClearAllConn2Chara();
             canStart = false;
         }
         base.ServerChangeScene(newSceneName);
@@ -93,6 +94,12 @@ public class MyNetworkRoomManager : NetworkRoomManager
         {
             allPlayersReady = false;
             canStart = false;
+            return;
+        }
+        if(!Gmt.CheckifReady(roomSlots.Count))
+        {
+            Debug.Log("jll");
+            allPlayersReady = false;
             return;
         }
         if(!canStart)

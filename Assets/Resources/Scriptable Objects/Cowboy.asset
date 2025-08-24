@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b4081844caff7439692cb8d7a4e52a, type: 3}
   m_Name: Cowboy
   m_EditorClassIdentifier: 
-  self_name: cowboy
-  prefab: {fileID: 1292479742668622995, guid: f8b56bd4dd61d9d4c969e00db1e11364, type: 3}
+  self_name: cowboy (1)
+  prefab: {fileID: 6686639983209750044, guid: 9fa1c439a9caa8d43b67ef069d7944ed, type: 3}
   icon: {fileID: 21300000, guid: c191f399f8a97a748907fef1eb82f1ce, type: 3}

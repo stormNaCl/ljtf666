@@ -19,6 +19,8 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private bool jumpTrigger;
     private Transform dirTransform;
+    [SerializeField]
+    private Transform headTransform;
     private GameObject dirObj;
     [Header("…‰ª˜ Ù–‘")]
     [SerializeField] private LayerMask aimLayerMask;
@@ -93,11 +95,12 @@ public class PlayerMovement : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GetComponent<Player>();
-        playControl = player.playControl;
+        
         if (!isLocalPlayer)
             return;
-        aim = GameObject.Find("aim").transform;
+        player = GetComponent<Player>();
+        playControl = player.playControl;
+        //aim = transform.Find("aim").transform;
         characterController = GetComponent<CharacterController>();
         dirObj = new GameObject();
         dirTransform = dirObj.transform;
@@ -116,13 +119,13 @@ public class PlayerMovement : NetworkBehaviour
             lookDirection.y = 0;
             lookDirection.Normalize();
             transform.forward = lookDirection;
-            //aim.position = new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z);
+            //aim.position = new Vector3(hitInfo.point.x, .position.y, hitInfo.point.z);
         }
         Ray ray2 = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(ray2, out var hitInfo2, Mathf.Infinity, aimLayerMask))
         {
             aim.gameObject.SetActive(true);
-            aim.position = new Vector3(hitInfo2.point.x, transform.position.y, hitInfo2.point.z);
+            aim.position = new Vector3(hitInfo2.point.x, headTransform.position.y, hitInfo2.point.z);
         }
         else
         {

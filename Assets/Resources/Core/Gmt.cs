@@ -62,6 +62,15 @@ public class Gmt : MonoBehaviour
             return null;
         }
     }
+    public static bool CheckifReady(int num)
+    {
+        Debug.Log(num+"asdasd"+conn_2_Chara.Count);
+        if(num == conn_2_Chara.Count)
+        {
+            return true;
+        }
+        return false;
+    }
     // Update is called once per frame
     void Update()
     {
