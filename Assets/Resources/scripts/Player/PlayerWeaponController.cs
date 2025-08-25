@@ -166,10 +166,21 @@ public class PlayerWeaponController : NetworkBehaviour
         animator.SetTrigger("reload");
         rig.weight = 0;
     }
-    public void Shoot()
+    [Command]
+    public void CmdCreateBullet()
+    {
+        RPCCreateBullet();
+    }
+    [ClientRpc]
+    public void RPCCreateBullet()
     {
         GameObject bullet = Instantiate(bulletPre, bulletSpawn.position, Quaternion.LookRotation(playerAim.shootDir));
         bullet.GetComponent<Rigidbody>().AddForce(playerAim.shootDir * bulletSpeed, ForceMode.Impulse);
+    }
+    public void Shoot()
+    {
+        CmdCreateBullet();
+        
         GetComponentInChildren<Animator>().SetTrigger("Fire");
     }
     // Update is called once per frame

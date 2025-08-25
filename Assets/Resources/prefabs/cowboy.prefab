@@ -450,6 +450,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  aim: {fileID: 0}
 --- !u!114 &1940978860262947531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,11 +477,6 @@ MonoBehaviour:
   jumpSpeed: 2.3
   jumpTrigger: 0
   headTransform: {fileID: 7157020759444422529}
-  aimLayerMask:
-    serializedVersion: 2
-    m_Bits: 448
-  lookDirection: {x: 0, y: 0, z: 0}
-  aim: {fileID: 5023891716861593740}
   animator: {fileID: 0}
 --- !u!114 &513749590886456453
 MonoBehaviour:
@@ -497,6 +493,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  playerAim: {fileID: 0}
   currentWeaponIndex: 0
   weapons:
   - weaponName: m1911
@@ -504,13 +501,23 @@ MonoBehaviour:
     weaponModel: {fileID: 3978235632829695315}
     weaponAnimator: {fileID: 0}
     switchSound: {fileID: 0}
+    usingLayer: 0
+    grabType: 0
+    bulletHole: {fileID: 0}
   - weaponName: m4
     damage: 30
     weaponModel: {fileID: 812498726280876352}
     weaponAnimator: {fileID: 0}
     switchSound: {fileID: 0}
+    usingLayer: 0
+    grabType: 0
+    bulletHole: {fileID: 0}
   tar: {fileID: 7022058482950634028}
   hint: {fileID: 8089372493851637330}
+  bulletSpeed: 100
+  bulletSpawn: {fileID: 0}
+  bulletPre: {fileID: 0}
+  OpRigStep: 2.5
 --- !u!143 &7637504430942328224
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3645,7 +3652,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8314229898689767621}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3700,7 +3707,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

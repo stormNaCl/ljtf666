@@ -6,6 +6,7 @@ public class PlayerAim : NetworkBehaviour
 {
     public Player player;
     public PlayControl playControl;
+    public PlayerWeaponController playerWeaponController;
     private Vector2 aimInput;
     public LineRenderer lineRenderer;
     [Header("…‰ª˜ Ù–‘")]
@@ -19,6 +20,7 @@ public class PlayerAim : NetworkBehaviour
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        playerWeaponController = GetComponent<PlayerWeaponController>();
         player = GetComponent<Player>();
         //cameraFollowInstance = transform.Find("CameraFollowInstance").gameObject;
         AssignInputSystem();
@@ -80,7 +82,7 @@ public class PlayerAim : NetworkBehaviour
             f.y = transform.position.y + .5f;
             cameraFollowInstance.transform.position = transform.position+f;
         }
-        lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z));
+        lineRenderer.SetPosition(0, playerWeaponController.weapons[playerWeaponController.currentWeaponIndex].bulletHole.position);
         lineRenderer.SetPosition(1, aim.position);
     }
     private void FixedUpdate()
