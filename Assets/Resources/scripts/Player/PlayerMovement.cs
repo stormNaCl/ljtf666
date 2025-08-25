@@ -22,10 +22,10 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]
     private Transform headTransform;
     private GameObject dirObj;
-    [Header("Éä»÷ÊôÐÔ")]
-    [SerializeField] private LayerMask aimLayerMask;
-    [SerializeField] private Vector3 lookDirection;
-    [SerializeField] private Transform aim;
+    //[Header("Éä»÷ÊôÐÔ")]
+    //[SerializeField] private LayerMask aimLayerMask;
+    //[SerializeField] private Vector3 lookDirection;
+    //[SerializeField] private Transform aim;
     [Header("¶¯»­ÊôÐÔ")]
     [SerializeField] private Animator animator;
 
@@ -35,8 +35,7 @@ public class PlayerMovement : NetworkBehaviour
         
         playControl.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playControl.Player.Move.canceled += ctx => moveInput = Vector2.zero;
-        playControl.Player.Look.performed += ctx => aimInput = ctx.ReadValue<Vector2>();
-        playControl.Player.Look.canceled += ctx => aimInput = Vector2.zero;
+        
         playControl.Player.Sprint.performed += ctx => HandleRun(true);
         playControl.Player.Sprint.canceled += ctx => HandleRun(false);
         playControl.Player.Jump.performed += ctx => jumpTrigger = true;
@@ -110,28 +109,7 @@ public class PlayerMovement : NetworkBehaviour
         animator = GetComponentInChildren<Animator>();
         AssignInputSystem();
     }
-    private void HandleAim()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, aimLayerMask))
-        {
-            lookDirection = hitInfo.point - transform.position;
-            lookDirection.y = 0;
-            lookDirection.Normalize();
-            transform.forward = lookDirection;
-            //aim.position = new Vector3(hitInfo.point.x, .position.y, hitInfo.point.z);
-        }
-        Ray ray2 = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray2, out var hitInfo2, Mathf.Infinity, aimLayerMask))
-        {
-            aim.gameObject.SetActive(true);
-            aim.position = new Vector3(hitInfo2.point.x, headTransform.position.y, hitInfo2.point.z);
-        }
-        else
-        {
-            aim.gameObject.SetActive(false);
-        }
-    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -148,6 +126,6 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!isLocalPlayer)
             return;
-        HandleAim();
+        //HandleAim();
     }
 }

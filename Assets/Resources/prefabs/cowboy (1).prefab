@@ -2539,6 +2539,8 @@ GameObject:
   - component: {fileID: 6557133145098457788}
   - component: {fileID: 8177233496782286713}
   - component: {fileID: 8905156097644300534}
+  - component: {fileID: 2628044492923482657}
+  - component: {fileID: 1379786749389019254}
   m_Layer: 0
   m_Name: cowboy (1)
   m_TagString: Untagged
@@ -2561,6 +2563,7 @@ Transform:
   m_Children:
   - {fileID: 4199677722547246756}
   - {fileID: 1134365537744979412}
+  - {fileID: 4735878181175935111}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2569034602999915978
@@ -2578,6 +2581,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  aim: {fileID: 0}
 --- !u!114 &6342869477193059234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2604,11 +2608,6 @@ MonoBehaviour:
   jumpSpeed: 2.3
   jumpTrigger: 0
   headTransform: {fileID: 3844703413479643742}
-  aimLayerMask:
-    serializedVersion: 2
-    m_Bits: 448
-  lookDirection: {x: 0, y: 0, z: 0}
-  aim: {fileID: 4079078705301121939}
   animator: {fileID: 0}
 --- !u!114 &7432208828002974422
 MonoBehaviour:
@@ -2720,6 +2719,44 @@ MonoBehaviour:
   rotationSensitivity: 0.01
   positionPrecision: 0.01
   scalePrecision: 0.01
+--- !u!114 &2628044492923482657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686639983209750044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c3e95815b18aa4ea07b6833058d769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+--- !u!114 &1379786749389019254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686639983209750044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e453e3be9b20d48b26ab7b0a4a6a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  player: {fileID: 0}
+  aimLayerMask:
+    serializedVersion: 2
+    m_Bits: 193
+  lookDirection: {x: 0, y: 0, z: 0}
+  aim: {fileID: 4079078705301121939}
+  maxDistance: 1
+  cameraFollowInstance: {fileID: 8592460306970775927}
 --- !u!1 &6702760252946904083
 GameObject:
   m_ObjectHideFlags: 0
@@ -3137,7 +3174,7 @@ GameObject:
   - component: {fileID: 3422784512944797814}
   - component: {fileID: 6509543811554507441}
   - component: {fileID: 2864760801581165443}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3721,6 +3758,37 @@ MonoBehaviour:
       x: 1
       y: 1
       z: 1
+--- !u!1 &8592460306970775927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4735878181175935111}
+  m_Layer: 0
+  m_Name: CameraFollowInstance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4735878181175935111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8592460306970775927}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5.8942, y: 5.8942, z: 5.8942}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1552704220813121034}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8843641063628516201
 GameObject:
   m_ObjectHideFlags: 0

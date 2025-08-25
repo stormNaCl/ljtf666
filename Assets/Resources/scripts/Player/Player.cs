@@ -4,10 +4,12 @@ using UnityEngine;
 public class Player : NetworkBehaviour
 {
     public PlayControl playControl;
+    public PlayerAim aim;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         playControl = new PlayControl();
+        aim = GetComponent<PlayerAim>();
     }
     private void OnEnable()
     {
