@@ -8,16 +8,19 @@ public struct Weapon
     public string weaponName;
     public int damage;
     public GameObject weaponModel;
+    
     public Animator weaponAnimator;
     public AudioClip switchSound;
     public int usingLayer;
     public GrabType grabType;
+    public Transform bulletHole;
     // 其他武器属性...
 }
 public enum GrabType { side, back };
 public class PlayerWeaponController : NetworkBehaviour
 {
     private Player player;
+    public PlayerAim playerAim;
     private PlayControl control;
     [SyncVar(hook = nameof(OnWeaponChanged))]
     public int currentWeaponIndex = 0;
@@ -26,7 +29,11 @@ public class PlayerWeaponController : NetworkBehaviour
     public Transform hint;
     private Animator animator;
     private Rig rig;
+    public float bulletSpeed = 100f;
+    public Transform bulletSpawn;
+    public GameObject bulletPre;
     private bool needOpRig2One;
+    
     [SerializeField]
     private float OpRigStep = 2.5f;
 
@@ -93,6 +100,7 @@ public class PlayerWeaponController : NetworkBehaviour
         //weapons[newIndex].weaponModel.SetActive(true);
         SwitchUsingLayer();
         PlayGrabAnimation(weapons[newIndex].grabType);
+        bulletSpawn = weapons[newIndex].bulletHole;
         AttechTargetTransform();
         // 本地处理音效、动画等
         //PlaySwitchEffects(newIndex);
@@ -142,6 +150,7 @@ public class PlayerWeaponController : NetworkBehaviour
     {
 
         player = GetComponent<Player>();
+        playerAim = GetComponent<PlayerAim>();
         animator = GetComponentInChildren<Animator>();
         control = player.playControl;
         rig = GetComponentInChildren<Rig>();
@@ -149,6 +158,7 @@ public class PlayerWeaponController : NetworkBehaviour
         control.Player.Reload.performed += (ctx) => Reload();
         CmdRequestSwitchWeapon(0);
         currentWeaponIndex = 0;
+        bulletSpawn = weapons[currentWeaponIndex].bulletHole;
 
     }
     public void Reload()
@@ -158,6 +168,8 @@ public class PlayerWeaponController : NetworkBehaviour
     }
     public void Shoot()
     {
+        GameObject bullet = Instantiate(bulletPre, bulletSpawn.position, Quaternion.LookRotation(playerAim.shootDir));
+        bullet.GetComponent<Rigidbody>().AddForce(playerAim.shootDir * bulletSpeed, ForceMode.Impulse);
         GetComponentInChildren<Animator>().SetTrigger("Fire");
     }
     // Update is called once per frame

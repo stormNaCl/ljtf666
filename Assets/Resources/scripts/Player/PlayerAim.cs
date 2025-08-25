@@ -7,15 +7,18 @@ public class PlayerAim : NetworkBehaviour
     public Player player;
     public PlayControl playControl;
     private Vector2 aimInput;
+    public LineRenderer lineRenderer;
     [Header("…‰ª˜ Ù–‘")]
     [SerializeField] private LayerMask aimLayerMask;
     [SerializeField] private Vector3 lookDirection;
     [SerializeField] private Transform aim;
     [SerializeField] private float maxDistance = 1.5f;
+    public Vector3 shootDir;
     public GameObject cameraFollowInstance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        lineRenderer = GetComponent<LineRenderer>();
         player = GetComponent<Player>();
         //cameraFollowInstance = transform.Find("CameraFollowInstance").gameObject;
         AssignInputSystem();
@@ -60,6 +63,7 @@ public class PlayerAim : NetworkBehaviour
                 aim.position = hitInfo2.point;
                 Vector3 ff = (hitInfo2.point-transform.position).normalized;
                 cameraFollowInstance.transform.position = transform.position+ff*maxDistance;
+                shootDir = (hitInfo2.point - new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z)).normalized;
                 //aim.position = new Vector3(hitInfo2.point.x, headTransform.position.y, hitInfo2.point.z);
             }
             else
@@ -76,7 +80,8 @@ public class PlayerAim : NetworkBehaviour
             f.y = transform.position.y + .5f;
             cameraFollowInstance.transform.position = transform.position+f;
         }
-
+        lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z));
+        lineRenderer.SetPosition(1, aim.position);
     }
     private void FixedUpdate()
     {
